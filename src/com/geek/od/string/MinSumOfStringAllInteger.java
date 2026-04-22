@@ -46,7 +46,8 @@ public class MinSumOfStringAllInteger {
     private static int minSumOfStringAllInteger(String expression) {
 
         boolean isNegative = false;
-        List<Character> negativeBuffer = new ArrayList<>();
+        StringBuilder negativeBuffer = new StringBuilder();
+        int sum = 0;
 
         char[] charArray = expression.toCharArray();
         for (int i = 0; i < charArray.length; i++) {
@@ -54,22 +55,24 @@ public class MinSumOfStringAllInteger {
             char c = charArray[i];
             if (Character.isDigit(c)) {
                 if (isNegative) {
-                    negativeBuffer.ad
+                    negativeBuffer.append(c);
+                } else {
+                    sum += Integer.parseInt(c + "");
                 }
             } else {
+                if (isNegative) {
+                    sum -= Integer.parseInt(negativeBuffer.toString());
+                }
+                isNegative = false;
+                negativeBuffer = new StringBuilder();
 
+                if (c == '-') {
+                    isNegative = true;
+                }
             }
         }
 
-        return 0;
-    }
-
-    public static int parseInt(List<Character> nums) {
-        StringBuilder sb = new StringBuilder();
-        for (Character num : nums) {
-            sb.append(num);
-        }
-        return Integer.parseInt(sb.toString());
+        return sum;
     }
 
 }
